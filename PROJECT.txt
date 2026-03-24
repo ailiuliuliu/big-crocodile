@@ -1,0 +1,53 @@
+"""
+投资顾问系统 - 项目概览
+"""
+
+项目结构：
+investment-advisor/
+├── advisor.py              # 主程序（每日运行）
+├── data_fetcher.py         # 数据获取模块（基金净值、市场新闻）
+├── analyzer.py             # 分析模块（生成调仓建议）
+├── notifier.py             # 推送模块（Server酱/企业微信）
+├── config.yaml             # 配置文件（持仓、用户信息、API密钥）
+├── requirements.txt        # Python依赖
+├── install.sh              # 一键安装脚本
+├── setup_wizard.py         # 配置向导（交互式配置）
+├── test.py                 # 测试脚本
+├── README.md               # 完整文档
+├── QUICKSTART.md           # 快速开始指南
+├── logs/                   # 日志目录
+│   ├── advisor.log         # 系统日志
+│   ├── launchd.out.log     # 定时任务输出
+│   └── launchd.err.log     # 定时任务错误
+└── data/                   # 数据目录（预留）
+
+核心功能：
+1. ✅ 每日定时分析（中午12点）
+2. ✅ 自动止损/止盈提醒
+3. ✅ 手续费计算（避免短期赎回）
+4. ✅ 组合风险评估
+5. ✅ 微信推送报告
+6. ✅ 紧急情况预警
+
+技术栈：
+- Python 3.9+
+- requests（HTTP请求）
+- BeautifulSoup4（网页解析）
+- PyYAML（配置文件）
+- macOS launchd（定时任务）
+- Server酱API（微信推送）
+
+使用流程：
+1. python3 setup_wizard.py  # 配置向导
+2. ./install.sh             # 安装系统
+3. 自动运行！               # 每天12点推送分析
+
+维护命令：
+- python3 advisor.py        # 手动运行
+- python3 test.py           # 运行测试
+- tail -f logs/advisor.log  # 查看日志
+- nano config.yaml          # 编辑配置
+
+作者：老李的AI助手
+版本：1.0.0
+日期：2026-03-20

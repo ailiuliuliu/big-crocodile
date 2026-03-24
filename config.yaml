@@ -1,0 +1,113 @@
+# 投资分析系统配置文件
+# 请根据实际情况修改
+
+# ============ 持仓信息 ============
+# 数据来源：支付宝实际数据，已更新至2026-03-24 00:00（3月23日收盘后）
+holdings:
+  - name: "广发医疗保健股票A"
+    code: "004851"
+    amount: 9069.40  # 今天0点确认值
+    cost: 14000.00
+    profit: -4930.60
+    return_rate: -35.22
+    
+  - name: "国泰黄金ETF联接A"
+    code: "000218"
+    amount: 4110.88
+    cost: 4800.00
+    profit: -689.12
+    return_rate: -14.36
+    
+  - name: "大成高鑫股票A"
+    code: "000628"
+    amount: 5163.51
+    cost: 5399.75
+    profit: -236.24
+    return_rate: -4.37
+    
+  - name: "华夏有色金属ETF联接A"
+    code: "512400"
+    amount: 1434.18
+    cost: 1500.00
+    profit: -65.82
+    return_rate: -4.39
+    
+  - name: "南方中证机器人ETF联接C"
+    code: "020608"
+    amount: 2392.81
+    cost: 2500.00
+    profit: -107.19
+    return_rate: -4.29
+    
+  - name: "创金合信中证红利低波指数A"
+    code: "005561"
+    amount: 6789.50
+    cost: 7000.00
+    profit: -210.50
+    return_rate: -3.01
+    
+  - name: "信澳新能源产业股票A"
+    code: "001410"
+    amount: 6568.53
+    cost: 4819.98
+    profit: 1748.56
+    return_rate: 36.28
+
+# ============ 用户信息 ============
+user:
+  name: "李天宇"
+  nickname: "老李"
+  risk_preference: "平衡型"  # 稳健型/平衡型/激进型
+  investment_horizon: "长期"  # 短期/中期/长期
+  max_drawdown: 50  # 可接受最大回撤（%）
+  total_capital: 150000  # 总资金（元）
+
+# ============ 交易规则 ============
+trading_rules:
+  min_trade_amount: 1000  # 最小交易金额（元）
+  min_return_threshold: 5  # 最小调仓收益阈值（%），低于此值不建议操作
+  short_term_days: 7  # 短期持有天数（持有少于此天数不建议卖出）
+  emergency_threshold: 10  # 紧急调仓阈值（单日跌幅超过此值触发提醒）
+  max_position_ratio: 30  # 单一标的最大仓位（%）
+
+# ============ API配置 ============
+# Server酱推送（推荐，最简单）
+# 注册地址：https://sct.ftqq.com/
+serverchan:
+  enabled: true
+  sendkey: "SCT327245Ta7cymmidydxAzK3kTzFXW9dv"  # Server酱推送密钥
+
+# 企业微信Webhook（备选，免费无限制）
+wechat_work:
+  enabled: false
+  webhook_url: "YOUR_WEBHOOK_URL_HERE"
+
+# OpenAI API（用于AI分析）
+openai:
+  api_key: ""  # 请填入你的OpenAI API Key（sk-proj-...或sk-...）
+  model: "gpt-4o"  # 推荐gpt-4o，性价比高
+  base_url: "https://api.openai.com/v1"  # 可选，自定义API地址
+  max_tokens: 4000  # 最大返回token数
+  temperature: 0.7  # 温度参数，控制创造性
+
+# ============ 运行配置 ============
+schedule:
+  daily_analysis_time: "12:00"  # 每日分析时间
+  timezone: "Asia/Shanghai"
+  
+logging:
+  level: "INFO"  # DEBUG/INFO/WARNING/ERROR
+  file: "logs/advisor.log"
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+
+# ============ 数据源配置 ============
+data_sources:
+  # 基金净值数据源
+  fund_api: "https://fund.eastmoney.com"
+  
+  # 财经新闻源
+  news_sources:
+    - "https://finance.sina.com.cn"
+    - "https://www.21jingji.com"
+    - "https://stock.eastmoney.com"

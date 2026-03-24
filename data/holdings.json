@@ -1,0 +1,51 @@
+[
+  {
+    "name": "广发医疗保健股票A",
+    "code": "004851",
+    "amount": 9069.40,
+    "cost": 14000.00,
+    "return_rate": -35.22
+  },
+  {
+    "name": "国泰黄金ETF联接A",
+    "code": "000218",
+    "amount": 4110.88,
+    "cost": 4800.00,
+    "return_rate": -14.36
+  },
+  {
+    "name": "大成高鑫股票A",
+    "code": "000628",
+    "amount": 5163.51,
+    "cost": 5399.75,
+    "return_rate": -4.37
+  },
+  {
+    "name": "华夏有色金属ETF联接A",
+    "code": "512400",
+    "amount": 1434.18,
+    "cost": 1500.00,
+    "return_rate": -4.39
+  },
+  {
+    "name": "南方中证机器人ETF联接C",
+    "code": "020608",
+    "amount": 2392.81,
+    "cost": 2500.00,
+    "return_rate": -4.29
+  },
+  {
+    "name": "创金合信中证红利低波指数A",
+    "code": "005561",
+    "amount": 6789.50,
+    "cost": 7000.00,
+    "return_rate": -3.01
+  },
+  {
+    "name": "信澳新能源产业股票A",
+    "code": "001410",
+    "amount": 6568.53,
+    "cost": 4819.98,
+    "return_rate": 36.28
+  }
+]

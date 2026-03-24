@@ -1,0 +1,59 @@
+name: 每日投资分析
+
+on:
+  # 定时任务：每天中午12:00自动运行（北京时间）
+  schedule:
+    - cron: '0 4 * * *'  # UTC 04:00 = 北京时间 12:00
+  
+  # 手动触发
+  workflow_dispatch:
+  
+  # 当holdings.json更新时触发
+  push:
+    paths:
+      - 'data/holdings.json'
+      - '.github/workflows/daily-analysis.yml'
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 🐍 设置Python环境
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      
+      - name: 📦 安装依赖
+        run: |
+          pip install -r requirements.txt
+      
+      - name: 🤖 运行投资分析
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+        run: |
+          python github_analyzer.py
+      
+      - name: 📊 生成历史趋势图
+        run: |
+          python generate_charts.py
+      
+      - name: 📄 部署到GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          commit_message: '📊 更新投资分析报告'
+      
+      - name: 📱 推送微信通知（可选）
+        if: env.SERVERCHAN_KEY != ''
+        run: |
+          python send_notification.py

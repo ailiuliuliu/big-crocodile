@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能投资顾问 - AI驱动的持仓分析</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Tab切换样式 */
+        .input-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: #f5f7fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #e8ecf1;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .tab-content {
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 上传区域样式 */
+        .upload-area {
+            margin-bottom: 16px;
+        }
+
+        .upload-placeholder {
+            border: 2px dashed #d0d0d0;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafbfc;
+        }
+
+        .upload-placeholder:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .upload-placeholder svg {
+            color: #999;
+        }
+
+        #imagePreview {
+            text-align: center;
+        }
+
+        #previewImg {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+        }
+
+        .btn-small:hover {
+            background: #d32f2f;
+        }
+
+        /* 输入区域 */
+        .input-section {
+            height: fit-content;
+        }
+
+        .fund-input {
+            margin-bottom: 16px;
+        }
+
+        .fund-input label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .fund-input input, .fund-input textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .fund-input input:focus, .fund-input textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .fund-input textarea {
+            min-height: 120px;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 概览卡片 */
+        .overview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .overview-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .overview-item.positive {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        }
+
+        .overview-item.negative {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .overview-item .label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .overview-item .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .overview-item .change {
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* 建议卡片 */
+        .recommendations {
+            display: grid;
+            gap: 16px;
+        }
+
+        .rec-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rec-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+        }
+
+        .rec-card.buy::before {
+            background: linear-gradient(180deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .rec-card.sell::before {
+            background: linear-gradient(180deg, #eb3349 0%, #f45c43 100%);
+        }
+
+        .rec-card.hold::before {
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .rec-card.warn::before {
+            background: linear-gradient(180deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .rec-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .rec-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .rec-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .rec-urgency {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .rec-urgency.high {
+            background: #fee;
+            color: #c00;
+        }
+
+        .rec-urgency.medium {
+            background: #ffefd5;
+            color: #ff8c00;
+        }
+
+        .rec-urgency.low {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .rec-fund {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .rec-reason {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .rec-action {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .rec-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .rec-detail-item {
+            background: #f0f4ff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .rec-detail-item .label {
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .rec-detail-item .value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 持仓列表 */
+        .holdings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .holdings-table th {
+            background: #f5f7fa;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .holdings-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+
+        .holdings-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.profit {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.loss {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 示例数据提示 */
+        .example-hint {
+            background: #fff3cd;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #856404;
+            margin-top: 12px;
+            border-left: 4px solid #ffc107;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        /* OCR识别提示 */
+        .ocr-status {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .ocr-status.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .ocr-status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .ocr-status.processing {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 智能投资顾问</h1>
+            <p>AI驱动的持仓分析 · 截图识别 · 深度行业洞察</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- 左侧：输入区域 -->
+            <div class="card input-section">
+                <h2>📝 持仓输入</h2>
+                
+                <!-- Tab切换 -->
+                <div class="input-tabs">
+                    <button class="tab-btn active" onclick="switchTab('screenshot')">📷 截图上传</button>
+                    <button class="tab-btn" onclick="switchTab('json')">📋 JSON输入</button>
+                </div>
+
+                <!-- 截图上传模式 -->
+                <div id="screenshotTab" class="tab-content">
+                    <div class="upload-area">
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+                        <div class="upload-placeholder" id="uploadPlaceholder" onclick="document.getElementById('fileInput').click()">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                            <p style="margin-top: 12px; font-size: 14px; color: #666;">点击上传支付宝持仓截图</p>
+                            <p style="font-size: 12px; color: #999; margin-top: 4px;">支持 JPG、PNG 格式</p>
+                        </div>
+                        <div id="imagePreview" style="display: none;">
+                            <img id="previewImg" alt="预览图片" />
+                            <button class="btn-small" onclick="clearImage()">🗑️ 清除图片</button>
+                        </div>
+                    </div>
+                    <div class="example-hint">
+                        💡 <strong>提示：</strong>上传支付宝基金持仓页面截图，AI将自动识别持仓信息
+                    </div>
+                    <div id="ocrStatus" class="ocr-status"></div>
+                    <button class="btn" onclick="recognizeImage()" id="recognizeBtn" disabled>🤖 AI识别持仓</button>
+                </div>
+
+                <!-- JSON输入模式 -->
+                <div id="jsonTab" class="tab-content" style="display: none;">
+                    <div class="fund-input">
+                        <label>持仓数据（JSON格式）</label>
+                        <textarea id="holdingsInput" placeholder='粘贴你的持仓JSON数据，格式示例：
+[
+  {
+    "name": "广发医疗保健股票A",
+    "code": "004851",
+    "amount": 9069.40,
+    "cost": 14000.00,
+    "return_rate": -35.22
+  }
+]'></textarea>
+                        <div class="example-hint">
+                            💡 <strong>提示：</strong>点击"加载示例数据"查看效果
+                        </div>
+                    </div>
+                    <button class="btn" onclick="loadExample()">📋 加载示例数据</button>
+                </div>
+
+                <button class="btn" onclick="analyzeHoldings()" style="margin-top: 12px;">🚀 开始分析</button>
+            </div>
+
+            <!-- 右侧：分析结果 -->
+            <div class="card">
+                <h2>📊 分析结果</h2>
+                <div id="resultArea">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                        <p>上传截图或输入持仓数据后，点击"开始分析"查看智能建议</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let currentImageBase64 = null;
+        let recognizedData = null;
+
+        // 示例数据（基于实际持仓）
+        const exampleData = [
+            {
+                "name": "广发医疗保健股票A",
+                "code": "004851",
+                "amount": 9069.40,
+                "cost": 14000.00,
+                "return_rate": -35.22
+            },
+            {
+                "name": "国泰黄金ETF联接A",
+                "code": "000218",
+                "amount": 4110.88,
+                "cost": 4800.00,
+                "return_rate": -14.36
+            },
+            {
+                "name": "大成高鑫股票A",
+                "code": "000628",
+                "amount": 5163.51,
+                "cost": 5399.75,
+                "return_rate": -4.37
+            },
+            {
+                "name": "华夏有色金属ETF联接A",
+                "code": "512400",
+                "amount": 1434.18,
+                "cost": 1500.00,
+                "return_rate": -4.39
+            },
+            {
+                "name": "南方中证机器人ETF联接C",
+                "code": "020608",
+                "amount": 2392.81,
+                "cost": 2500.00,
+                "return_rate": -4.29
+            },
+            {
+                "name": "创金合信中证红利低波指数A",
+                "code": "005561",
+                "amount": 6789.50,
+                "cost": 7000.00,
+                "return_rate": -3.01
+            },
+            {
+                "name": "信澳新能源产业股票A",
+                "code": "001410",
+                "amount": 6568.53,
+                "cost": 4819.98,
+                "return_rate": 36.28
+            }
+        ];
+
+        // Tab切换
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.style.display = 'none');
+            
+            if (tab === 'screenshot') {
+                tabs[0].classList.add('active');
+                document.getElementById('screenshotTab').style.display = 'block';
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('jsonTab').style.display = 'block';
+            }
+        }
+
+        // 处理文件选择
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // 验证文件类型
+            if (!file.type.match('image.*')) {
+                alert('请上传图片文件');
+                return;
+            }
+
+            // 读取并预览图片
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImageBase64 = e.target.result;
+                document.getElementById('previewImg').src = currentImageBase64;
+                document.getElementById('uploadPlaceholder').style.display = 'none';
+                document.getElementById('imagePreview').style.display = 'block';
+                document.getElementById('recognizeBtn').disabled = false;
+                
+                // 清除之前的状态
+                document.getElementById('ocrStatus').style.display = 'none';
+                recognizedData = null;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 清除图片
+        function clearImage() {
+            currentImageBase64 = null;
+            recognizedData = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('uploadPlaceholder').style.display = 'block';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('recognizeBtn').disabled = true;
+            document.getElementById('ocrStatus').style.display = 'none';
+        }
+
+        // AI识别图片
+        async function recognizeImage() {
+            if (!currentImageBase64) {
+                alert('请先上传图片');
+                return;
+            }
+
+            const statusEl = document.getElementById('ocrStatus');
+            statusEl.className = 'ocr-status processing';
+            statusEl.style.display = 'block';
+            statusEl.textContent = '🤖 AI识别中，请稍候...';
+            document.getElementById('recognizeBtn').disabled = true;
+
+            try {
+                // 调用后端OCR API
+                const API_URL = 'http://localhost:5001/api/ocr/recognize';
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: currentImageBase64
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API调用失败: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error || 'OCR识别失败');
+                }
+                
+                recognizedData = result.data;
+                
+                statusEl.className = 'ocr-status success';
+                statusEl.textContent = `✅ 识别成功！共识别到 ${recognizedData.length} 只基金，点击"开始分析"查看建议`;
+                
+                // 自动填充到JSON输入框（便于用户检查和修改）
+                document.getElementById('holdingsInput').value = JSON.stringify(recognizedData, null, 2);
+                
+            } catch (error) {
+                console.error('OCR识别错误:', error);
+                
+                // 如果API未启动，使用模拟数据
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    statusEl.className = 'ocr-status processing';
+                    statusEl.textContent = '⚠️ 后端服务未启动，使用模拟识别...';
+                    
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    recognizedData = exampleData;
+                    statusEl.className = 'ocr-status success';
+                    statusEl.textContent = `✅ 识别成功（模拟）！共识别到 ${recognizedData.length} 只基金`;
+                    document.getElementById('holdingsInput').value = JSON.stringify(recognizedData, null, 2);
+                } else {
+                    statusEl.className = 'ocr-status error';
+                    statusEl.textContent = '❌ 识别失败：' + error.message;
+                    recognizedData = null;
+                }
+            } finally {
+                document.getElementById('recognizeBtn').disabled = false;
+            }
+        }
+
+        // 加载示例数据
+        function loadExample() {
+            document.getElementById('holdingsInput').value = JSON.stringify(exampleData, null, 2);
+            recognizedData = exampleData;
+        }
+
+        // 分析持仓
+        function analyzeHoldings() {
+            let holdings = null;
+
+            // 优先使用识别的数据
+            if (recognizedData) {
+                holdings = recognizedData;
+            } else {
+                // 否则从JSON输入框获取
+                const input = document.getElementById('holdingsInput').value.trim();
+                if (!input) {
+                    alert('请先上传截图识别或输入持仓数据');
+                    return;
+                }
+
+                try {
+                    holdings = JSON.parse(input);
+                } catch (e) {
+                    alert('数据格式错误，请检查JSON格式: ' + e.message);
+                    return;
+                }
+            }
+
+            showLoading();
+            
+            // 模拟API调用延迟
+            setTimeout(() => {
+                const analysis = performAnalysis(holdings);
+                displayResults(analysis);
+            }, 1500);
+        }
+
+        // 显示加载动画
+        function showLoading() {
+            document.getElementById('resultArea').innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>AI分析中，正在识别机会...</p>
+                </div>
+            `;
+        }
+
+        // 执行分析
+        async function performAnalysis(holdings) {
+            try {
+                // 尝试调用AI分析API
+                const API_URL = 'http://localhost:5001/api/analyze';
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        holdings: holdings
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        console.log('✅ 使用AI分析引擎');
+                        return formatAIAnalysisResult(result.data);
+                    }
+                }
+                
+                throw new Error('API调用失败');
+                
+            } catch (error) {
+                console.warn('⚠️ AI API不可用，使用本地规则引擎', error);
+                // 降级到本地规则引擎
+                return performLocalAnalysis(holdings);
+            }
+        }
+
+        // 格式化AI分析结果
+        function formatAIAnalysisResult(data) {
+            const metrics = data.portfolio_metrics;
+            
+            return {
+                overview: {
+                    totalValue: metrics.total_value,
+                    totalCost: metrics.total_cost,
+                    totalProfit: metrics.total_profit,
+                    totalReturn: metrics.total_return.toFixed(2),
+                    fundCount: metrics.fund_count
+                },
+                holdings: data.holdings,
+                recommendations: data.recommendations,
+                marketAnalysis: data.market_analysis
+            };
+        }
+
+        // 本地规则引擎分析（降级方案）
+        function performLocalAnalysis(holdings) {
+            const totalValue = holdings.reduce((sum, h) => sum + h.amount, 0);
+            const totalCost = holdings.reduce((sum, h) => sum + h.cost, 0);
+            const totalProfit = totalValue - totalCost;
+            const totalReturn = (totalProfit / totalCost * 100).toFixed(2);
+
+            const recommendations = generateRecommendations(holdings, totalValue);
+
+            return {
+                overview: {
+                    totalValue,
+                    totalCost,
+                    totalProfit,
+                    totalReturn,
+                    fundCount: holdings.length
+                },
+                holdings,
+                recommendations
+            };
+        }
+
+        // 生成建议
+        function generateRecommendations(holdings, totalValue) {
+            const recs = [];
+
+            holdings.forEach(h => {
+                const positionRatio = (h.amount / totalValue * 100).toFixed(1);
+                
+                if (h.return_rate < -30) {
+                    recs.push({
+                        type: 'sell',
+                        typeLabel: '🔴 止损',
+                        urgency: 'high',
+                        urgencyLabel: '高',
+                        fund: h.name,
+                        reason: `深度亏损${h.return_rate.toFixed(1)}%，持续下跌可能加剧损失。当前医疗板块处于调整期，短期反弹概率较低。`,
+                        action: `建议减仓50%或全部清仓，剩余资金可转向防御性资产（黄金/红利）`,
+                        details: {
+                            '建议金额': `¥${(h.amount * 0.5).toFixed(0)}`,
+                            '赎回费率': '0.5%',
+                            '预期节省': `避免进一步下跌风险`,
+                            '仓位占比': `${positionRatio}%`
+                        }
+                    });
+                }
+                else if (h.return_rate > 30) {
+                    recs.push({
+                        type: 'sell',
+                        typeLabel: '💰 止盈',
+                        urgency: 'medium',
+                        urgencyLabel: '中',
+                        fund: h.name,
+                        reason: `收益率${h.return_rate.toFixed(1)}%已较高，新能源板块近期波动加剧。锁定利润可以提高组合稳定性。`,
+                        action: `建议减仓30-40%锁定利润，剩余仓位继续持有观察`,
+                        details: {
+                            '建议金额': `¥${(h.amount * 0.35).toFixed(0)}`,
+                            '锁定收益': `¥${(h.amount * 0.35 - h.cost * 0.35).toFixed(0)}`,
+                            '剩余仓位': `${(positionRatio * 0.65).toFixed(1)}%`,
+                            '赎回费率': '0.0%'
+                        }
+                    });
+                }
+                else if (h.name.includes('黄金') && positionRatio < 15 && h.return_rate > -20) {
+                    const targetAmount = totalValue * 0.17;
+                    const addAmount = Math.max(500, targetAmount - h.amount);
+                    recs.push({
+                        type: 'buy',
+                        typeLabel: '📈 仓位优化',
+                        urgency: 'medium',
+                        urgencyLabel: '中',
+                        fund: h.name,
+                        reason: `当前黄金仓位${positionRatio}%偏低。美联储降息预期升温，地缘政治不确定性增加，黄金中长期看涨。建议配置15-20%作为防御性资产。`,
+                        action: `建议加仓至17%仓位，优化资产配置`,
+                        details: {
+                            '建议金额': `¥${addAmount.toFixed(0)}`,
+                            '目标仓位': '17%',
+                            '申购费率': '0.15%',
+                            '配置理由': '避险+抗通胀'
+                        }
+                    });
+                }
+                else if (h.return_rate < -10 && h.return_rate > -25) {
+                    const addAmount = Math.min(2000, h.amount * 0.25);
+                    const newCost = (h.cost + addAmount) / (h.amount + addAmount);
+                    
+                    recs.push({
+                        type: 'buy',
+                        typeLabel: '🔻 成本摊薄',
+                        urgency: 'low',
+                        urgencyLabel: '低',
+                        fund: h.name,
+                        reason: `当前亏损${h.return_rate.toFixed(1)}%。如果你看好该行业长期前景，现在是摊低成本的机会窗口。`,
+                        action: `建议加仓${addAmount.toFixed(0)}元，降低持仓成本约${Math.abs((newCost / (h.cost / h.amount) - 1) * 100).toFixed(1)}%`,
+                        details: {
+                            '建议金额': `¥${addAmount.toFixed(0)}`,
+                            '加仓后成本': `降低${Math.abs((newCost / (h.cost / h.amount) - 1) * 100).toFixed(1)}%`,
+                            '回本收益率': `${Math.abs(h.return_rate * h.amount / (h.amount + addAmount)).toFixed(1)}%`,
+                            '申购费率': '0.15%'
+                        }
+                    });
+                }
+                else if (h.return_rate > 10 && h.return_rate < 30) {
+                    recs.push({
+                        type: 'hold',
+                        typeLabel: '✋ 继续持有',
+                        urgency: 'low',
+                        urgencyLabel: '低',
+                        fund: h.name,
+                        reason: `收益率${h.return_rate.toFixed(1)}%表现优异，当前趋势良好。建议继续持有，等待更高收益。`,
+                        action: `保持现有仓位，涨至+40%再考虑部分止盈`,
+                        details: {
+                            '当前收益': `¥${(h.amount - h.cost).toFixed(0)}`,
+                            '目标收益率': '+40%',
+                            '距离目标': `${(40 - h.return_rate).toFixed(1)}%`,
+                            '持有建议': '中长期持有'
+                        }
+                    });
+                }
+            });
+
+            const urgencyOrder = { 'high': 0, 'medium': 1, 'low': 2 };
+            recs.sort((a, b) => urgencyOrder[a.urgency] - urgencyOrder[b.urgency]);
+
+            return recs;
+        }
+
+        // 显示结果
+        function displayResults(analysis) {
+            const { overview, holdings, recommendations } = analysis;
+            
+            let html = `
+                <div class="overview">
+                    <div class="overview-item">
+                        <div class="label">持仓总值</div>
+                        <div class="value">¥${overview.totalValue.toFixed(2)}</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="label">持仓成本</div>
+                        <div class="value">¥${overview.totalCost.toFixed(2)}</div>
+                    </div>
+                    <div class="overview-item ${overview.totalReturn >= 0 ? 'positive' : 'negative'}">
+                        <div class="label">持有收益</div>
+                        <div class="value">${overview.totalReturn >= 0 ? '+' : ''}¥${overview.totalProfit.toFixed(2)}</div>
+                    </div>
+                    <div class="overview-item ${overview.totalReturn >= 0 ? 'positive' : 'negative'}">
+                        <div class="label">总收益率</div>
+                        <div class="value">${overview.totalReturn >= 0 ? '+' : ''}${overview.totalReturn}%</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 16px; font-size: 18px; color: #333;">💡 智能建议（共${recommendations.length}条）</h3>
+                <div class="recommendations">
+            `;
+
+            recommendations.forEach(rec => {
+                html += `
+                    <div class="rec-card ${rec.type}">
+                        <div class="rec-header">
+                            <div class="rec-type">${rec.typeLabel}</div>
+                            <div class="rec-urgency ${rec.urgency}">紧急度: ${rec.urgencyLabel}</div>
+                        </div>
+                        <div class="rec-fund"><strong>${rec.fund}</strong></div>
+                        <div class="rec-reason"><strong>分析：</strong>${rec.reason}</div>
+                        <div class="rec-action"><strong>建议：</strong>${rec.action}</div>
+                        <div class="rec-details">
+                            ${Object.entries(rec.details).map(([key, val]) => `
+                                <div class="rec-detail-item">
+                                    <div class="label">${key}</div>
+                                    <div class="value">${val}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                </div>
+
+                <h3 style="margin: 30px 0 16px; font-size: 18px; color: #333;">📋 持仓明细</h3>
+                <table class="holdings-table">
+                    <thead>
+                        <tr>
+                            <th>基金名称</th>
+                            <th>持仓金额</th>
+                            <th>持仓成本</th>
+                            <th>收益</th>
+                            <th>收益率</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            holdings.forEach(h => {
+                const profit = h.amount - h.cost;
+                const statusClass = h.return_rate >= 0 ? 'profit' : 'loss';
+                const statusText = h.return_rate >= 0 ? '盈利' : '亏损';
+                
+                html += `
+                    <tr>
+                        <td><strong>${h.name}</strong><br><small style="color: #999;">${h.code}</small></td>
+                        <td>¥${h.amount.toFixed(2)}</td>
+                        <td>¥${h.cost.toFixed(2)}</td>
+                        <td style="color: ${profit >= 0 ? '#2e7d32' : '#c62828'}; font-weight: 600;">
+                            ${profit >= 0 ? '+' : ''}¥${profit.toFixed(2)}
+                        </td>
+                        <td style="color: ${h.return_rate >= 0 ? '#2e7d32' : '#c62828'}; font-weight: 600;">
+                            ${h.return_rate >= 0 ? '+' : ''}${h.return_rate.toFixed(2)}%
+                        </td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('resultArea').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
