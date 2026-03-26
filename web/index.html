@@ -728,7 +728,10 @@
 
             try {
                 // 调用后端OCR API
-                const API_URL = 'http://localhost:5001/api/ocr/recognize';
+                // 自动检测API地址
+                const API_URL = window.location.hostname === 'localhost'
+                    ? 'http://localhost:5001/api/ocr/recognize'
+                    : '/api/ocr/recognize';
                 
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -833,8 +836,10 @@
         // 执行分析
         async function performAnalysis(holdings) {
             try {
-                // 尝试调用AI分析API
-                const API_URL = 'http://localhost:5001/api/analyze';
+                // 自动检测API地址（生产环境使用相对路径，开发环境使用localhost）
+                const API_URL = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5001/api/analyze'
+                    : '/api/analyze';
                 
                 const response = await fetch(API_URL, {
                     method: 'POST',
