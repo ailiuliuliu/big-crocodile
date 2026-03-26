@@ -1,0 +1,154 @@
+{
+  "portfolio_metrics": {
+    "total_value": 35528.810000000005,
+    "total_cost": 40019.729999999996,
+    "total_profit": -4490.919999999991,
+    "total_return": -11.221764864480575,
+    "fund_count": 7,
+    "asset_allocation": {
+      "医疗": 25.52688930476421,
+      "黄金": 11.570553587356287,
+      "其他": 18.569971805979428,
+      "科技": 6.734844201086385,
+      "红利价值": 19.109843532614796,
+      "新能源": 18.487897568198875
+    }
+  },
+  "holdings": [
+    {
+      "name": "广发医疗保健股票A",
+      "code": "004851",
+      "amount": 9069.4,
+      "cost": 14000.0,
+      "return_rate": -35.22,
+      "real_time": {
+        "confirmed_nav": 1.6788,
+        "confirmed_date": "2026-03-23",
+        "estimated_nav": 1.7256,
+        "estimated_change": 2.79,
+        "estimated_time": "2026-03-24 15:00"
+      }
+    },
+    {
+      "name": "国泰黄金ETF联接A",
+      "code": "000218",
+      "amount": 4110.88,
+      "cost": 4800.0,
+      "return_rate": -14.36,
+      "real_time": {
+        "confirmed_nav": 3.545,
+        "confirmed_date": "2026-03-24",
+        "estimated_nav": 3.5285,
+        "estimated_change": -0.47,
+        "estimated_time": "2026-03-24 21:28"
+      }
+    },
+    {
+      "name": "大成高鑫股票A",
+      "code": "000628",
+      "amount": 5163.51,
+      "cost": 5399.75,
+      "return_rate": -4.37,
+      "real_time": {
+        "confirmed_nav": 5.0828,
+        "confirmed_date": "2026-03-23",
+        "estimated_nav": 5.1261,
+        "estimated_change": 0.85,
+        "estimated_time": "2026-03-24 15:00"
+      }
+    },
+    {
+      "name": "华夏有色金属ETF联接A",
+      "code": "512400",
+      "amount": 1434.18,
+      "cost": 1500.0,
+      "return_rate": -4.39,
+      "real_time": {
+        "confirmed_nav": 1.8356,
+        "confirmed_date": "2026-03-23",
+        "estimated_nav": 1.8942,
+        "estimated_change": 3.19,
+        "estimated_time": "2026-03-24 15:00"
+      }
+    },
+    {
+      "name": "南方中证机器人ETF联接C",
+      "code": "020608",
+      "amount": 2392.81,
+      "cost": 2500.0,
+      "return_rate": -4.29,
+      "real_time": {
+        "confirmed_nav": 1.2679,
+        "confirmed_date": "2026-03-23",
+        "estimated_nav": 1.2867,
+        "estimated_change": 1.48,
+        "estimated_time": "2026-03-24 15:00"
+      }
+    },
+    {
+      "name": "创金合信中证红利低波指数A",
+      "code": "005561",
+      "amount": 6789.5,
+      "cost": 7000.0,
+      "return_rate": -3.01,
+      "real_time": {
+        "confirmed_nav": 2.1132,
+        "confirmed_date": "2026-03-23",
+        "estimated_nav": 2.1559,
+        "estimated_change": 2.02,
+        "estimated_time": "2026-03-24 15:00"
+      }
+    },
+    {
+      "name": "信澳新能源产业股票A",
+      "code": "001410",
+      "amount": 6568.53,
+      "cost": 4819.98,
+      "return_rate": 36.28,
+      "real_time": {
+        "confirmed_nav": 5.04,
+        "confirmed_date": "2026-03-23",
+        "estimated_nav": 5.1349,
+        "estimated_change": 1.88,
+        "estimated_time": "2026-03-24 15:00"
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "止损",
+      "fund_name": "广发医疗保健股票A",
+      "urgency": "高",
+      "reason": "深度亏损-35.2%，建议止损",
+      "action": "建议减仓50%或清仓",
+      "details": {
+        "建议金额": "¥4534",
+        "风险提示": "继续持有可能加剧损失"
+      }
+    },
+    {
+      "type": "加仓",
+      "fund_name": "国泰黄金ETF联接A",
+      "urgency": "中",
+      "reason": "黄金仓位11.6%偏低，建议提升至15-20%",
+      "action": "建议加仓至17%仓位",
+      "details": {
+        "建议金额": "¥1929",
+        "目标仓位": "17%"
+      }
+    },
+    {
+      "type": "止盈",
+      "fund_name": "信澳新能源产业股票A",
+      "urgency": "中",
+      "reason": "收益率36.3%较高，建议锁定利润",
+      "action": "建议减仓30-40%",
+      "details": {
+        "建议金额": "¥2298",
+        "预期收益": "锁定部分利润"
+      }
+    }
+  ],
+  "market_analysis": "未启用AI分析，请配置OpenAI API Key获取深度市场洞察",
+  "analyzed_at": "2026-03-24 21:30:27"
+}
