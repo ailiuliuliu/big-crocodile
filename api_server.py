@@ -7,7 +7,7 @@ import os
 import sys
 import yaml
 import logging
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 # 导入自定义模块
@@ -22,16 +22,47 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # 创建Flask应用
-app = Flask(__name__)
+app = Flask(__name__, static_folder='web', static_url_path='')
 CORS(app)  # 允许跨域
 
 # 加载配置
-with open('config.yaml', 'r', encoding='utf-8') as f:
-    config = yaml.safe_load(f)
+def load_config():
+    """加载配置（优先使用环境变量）"""
+    config_path = 'config.yaml'
+    if os.path.exists(config_path):
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+    else:
+        # 如果配置文件不存在，使用默认配置
+        config = {
+            'openai': {
+                'api_key': '',
+                'model': 'deepseek-ai/DeepSeek-V3',
+                'base_url': 'https://api.siliconflow.cn/v1',
+                'max_tokens': 4000,
+                'temperature': 0.7
+            }
+        }
+    
+    # 从环境变量覆盖API Key
+    openai_key = os.getenv('OPENAI_API_KEY')
+    if openai_key:
+        config['openai']['api_key'] = openai_key
+        logger.info("✅ 使用环境变量中的API Key")
+    
+    return config
+
+config = load_config()
 
 # 初始化服务
 ocr_service = HoldingsOCR(config)
 ai_analyzer = AIInvestmentAnalyzer(config)
+
+
+@app.route('/')
+def index():
+    """首页"""
+    return send_from_directory('web', 'index.html')
 
 
 @app.route('/api/health', methods=['GET'])
@@ -160,37 +191,28 @@ def check_config():
 
 
 if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5001))
+    debug = os.getenv('FLASK_ENV') != 'production'
+    
     print("=" * 60)
     print("🚀 投资顾问API服务启动")
     print("=" * 60)
-    print(f"📍 访问地址: http://localhost:5001")
-    print(f"📡 API接口:")
-    print(f"   - GET  /api/health          健康检查")
-    print(f"   - POST /api/ocr/recognize   OCR识别")
-    print(f"   - POST /api/analyze         AI分析")
-    print(f"   - POST /api/analyze/quick   快速分析（OCR+AI）")
-    print(f"   - GET  /api/config/check    配置检查")
-    print("=" * 60)
+    print(f"📍 端口: {port}")
+    print(f"📡 模式: {'生产环境' if not debug else '开发环境'}")
     
     # 检查配置
     openai_config = config.get('openai', {})
     api_key = openai_config.get('api_key', '')
     
-    if api_key and api_key != 'YOUR_OPENAI_API_KEY_HERE' and api_key.strip():
-        print("✅ OpenAI API已配置")
-        print(f"   模型: {openai_config.get('model', 'gpt-4o')}")
-        print(f"   OCR: GPT-4 Vision")
-        print(f"   分析: GPT-4 AI")
+    if api_key and api_key.strip():
+        print("✅ AI功能已启用")
+        print(f"   模型: {openai_config.get('model', 'unknown')}")
+        print(f"   服务商: {'硅基流动' if 'siliconflow' in openai_config.get('base_url', '') else 'OpenAI'}")
     else:
-        print("⚠️  OpenAI API未配置")
-        print("   OCR: 模拟识别（返回示例数据）")
-        print("   分析: 规则引擎（基于if-else）")
-        print("\n💡 配置方法:")
-        print("   1. 编辑 config.yaml")
-        print("   2. 填入 openai.api_key")
-        print("   3. 重启服务")
+        print("⚠️  AI功能未启用（使用规则引擎）")
+        print("   提示：设置环境变量 OPENAI_API_KEY 启用AI分析")
     
     print("=" * 60)
     print()
     
-    app.run(host='0.0.0.0', port=5001, debug=False)
+    app.run(host='0.0.0.0', port=port, debug=debug)

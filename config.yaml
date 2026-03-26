@@ -88,7 +88,7 @@ openai:
   # 注册地址：https://siliconflow.cn/
   # 免费额度：40万tokens
   # 模型推荐：deepseek-ai/DeepSeek-V3（¥0.14/百万tokens）
-  api_key: ""  # 填入硅基流动API Key（sk-xxxxx）
+  api_key: "sk-vtzvieqpnikmxalabgotxhvddoitjennxeqxzonrugljmugl"  # 硅基流动API Key
   model: "deepseek-ai/DeepSeek-V3"  # 或 Qwen/Qwen2.5-72B-Instruct
   base_url: "https://api.siliconflow.cn/v1"  # 硅基流动API地址
   
