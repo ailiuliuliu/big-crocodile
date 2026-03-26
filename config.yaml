@@ -82,11 +82,27 @@ wechat_work:
   enabled: false
   webhook_url: "YOUR_WEBHOOK_URL_HERE"
 
-# OpenAI API（用于AI分析）
+# AI模型配置（支持OpenAI、国内大模型）
 openai:
-  api_key: ""  # 请填入你的OpenAI API Key（sk-proj-...或sk-...）
-  model: "gpt-4o"  # 推荐gpt-4o，性价比高
-  base_url: "https://api.openai.com/v1"  # 可选，自定义API地址
+  # ============ 方案1：硅基流动（推荐，国内可用） ============
+  # 注册地址：https://siliconflow.cn/
+  # 免费额度：40万tokens
+  # 模型推荐：deepseek-ai/DeepSeek-V3（¥0.14/百万tokens）
+  api_key: ""  # 填入硅基流动API Key（sk-xxxxx）
+  model: "deepseek-ai/DeepSeek-V3"  # 或 Qwen/Qwen2.5-72B-Instruct
+  base_url: "https://api.siliconflow.cn/v1"  # 硅基流动API地址
+  
+  # ============ 方案2：OpenAI（需科学上网） ============
+  # api_key: "sk-proj-xxxxx"
+  # model: "gpt-4o"
+  # base_url: "https://api.openai.com/v1"
+  
+  # ============ 方案3：通义千问（阿里云） ============
+  # api_key: "sk-xxxxx"
+  # model: "qwen-max"
+  # base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  
+  # ============ 通用配置 ============
   max_tokens: 4000  # 最大返回token数
   temperature: 0.7  # 温度参数，控制创造性
 
