@@ -89,7 +89,8 @@ openai:
   # 免费额度：40万tokens
   # 模型推荐：deepseek-ai/DeepSeek-V3（¥0.14/百万tokens）
   api_key: "sk-vtzvieqpnikmxalabgotxhvddoitjennxeqxzonrugljmugl"  # 硅基流动API Key
-  model: "deepseek-ai/DeepSeek-V3"  # 或 Qwen/Qwen2.5-72B-Instruct
+  model: "deepseek-ai/DeepSeek-V3"  # AI分析模型（文本）
+  vision_model: "Pro/Qwen/Qwen2-VL-72B-Instruct"  # OCR识别模型（视觉）
   base_url: "https://api.siliconflow.cn/v1"  # 硅基流动API地址
   
   # ============ 方案2：OpenAI（需科学上网） ============

@@ -77,9 +77,12 @@ class HoldingsOCR:
 3. 如果截图中某些信息缺失，尽量推算或标记为0
 4. 确保返回的是有效的JSON数组
 """
+            # OCR识别必须使用VLM模型（支持视觉）
+            # 硅基流动支持的VLM模型：Pro/Qwen/Qwen2-VL-72B-Instruct
+            vision_model = self.openai_config.get('vision_model', 'Pro/Qwen/Qwen2-VL-72B-Instruct')
             
             response = self.client.chat.completions.create(
-                model=self.openai_config.get('model', 'gpt-4o'),
+                model=vision_model,  # 使用专门的视觉模型
                 messages=[
                     {
                         "role": "user",
