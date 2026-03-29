@@ -134,24 +134,7 @@ class AIInvestmentAnalyzer:
                 messages=[
                     {
                         "role": "system",
-                        "content": """你是一位专业的投资顾问，具有深厚的金融分析能力。
-你的任务是分析用户的基金持仓，提供专业、实用的投资建议。
-
-建议类型包括：
-1. 止损：深度亏损资产
-2. 止盈：高收益资产
-3. 加仓机会：超跌反弹、仓位优化、成本摊薄
-4. 持有：表现良好的资产
-5. 减仓：风险暴露过高
-
-分析维度：
-- 收益率分析
-- 行业趋势判断
-- 市场环境评估
-- 仓位配置建议
-- 风险收益权衡
-
-请提供具体的操作建议（金额、时机、理由），而不是泛泛而谈。"""
+                        "content": "你是专业投资顾问。分析基金持仓，提供具体建议：止损、止盈、加仓、持有、减仓。每条建议50-80字，聚焦操作要点。"
                     },
                     {
                         "role": "user",
@@ -204,45 +187,24 @@ class AIInvestmentAnalyzer:
             
             simplified_holdings.append(item)
         
-        prompt = f"""请分析以下投资组合并提供专业建议：
+        prompt = f"""分析投资组合，提供4-5条核心建议：
 
-## 组合概况
-- 总市值: ¥{portfolio_metrics['total_value']:.2f}
-- 持仓成本: ¥{portfolio_metrics['total_cost']:.2f}
-- 总收益: ¥{portfolio_metrics['total_profit']:.2f}
-- 总收益率: {portfolio_metrics['total_return']:.2f}%
-- 基金数量: {portfolio_metrics['fund_count']}只
+总市值¥{portfolio_metrics['total_value']:.2f} | 成本¥{portfolio_metrics['total_cost']:.2f} | 收益率{portfolio_metrics['total_return']:.2f}%
 
-## 资产配置
-{json.dumps(portfolio_metrics['asset_allocation'], indent=2, ensure_ascii=False)}
-
-## 持仓明细
+持仓明细：
 {json.dumps(simplified_holdings, indent=2, ensure_ascii=False)}
 
-## 请提供：
-
-1. **投资建议**（JSON格式，数组）：
-   - type: "止损" | "止盈" | "加仓" | "持有" | "减仓"
-   - fund_name: 基金名称
-   - urgency: "高" | "中" | "低"
-   - reason: 分析理由（结合市场趋势、行业逻辑、历史表现）
-   - action: 具体操作建议（包含金额、时机）
-   - details: {{
-       "建议金额": "¥xxxx",
-       "目标仓位": "xx%",
-       "预期收益": "xxx",
-       "风险提示": "xxx"
-     }}
-
-2. 主动识别**加仓机会**：
-   - 超跌反弹（亏损10-25%且有反弹迹象）
-   - 仓位优化（黄金等防御性资产配置不足）
-   - 成本摊薄（长期看好但短期亏损）
-
-请返回JSON格式：
+返回JSON格式（每条建议50-80字）：
 {{
-  "recommendations": [建议数组],
-  "summary": "整体分析总结"
+  "recommendations": [
+    {{
+      "type": "止损|止盈|加仓|持有|减仓",
+      "fund_name": "基金名称",
+      "urgency": "高|中|低",
+      "reason": "核心理由（聚焦操作要点）",
+      "action": "具体操作"
+    }}
+  ]
 }}
 """
         
