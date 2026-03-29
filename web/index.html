@@ -890,21 +890,26 @@
             }
         }
 
-        // 格式化AI分析结果
+        // 格式化AI分析结果（添加安全检查）
         function formatAIAnalysisResult(data) {
+            if (!data || !data.portfolio_metrics) {
+                console.error('AI返回数据格式错误:', data);
+                throw new Error('AI返回数据不完整');
+            }
+            
             const metrics = data.portfolio_metrics;
             
             return {
                 overview: {
-                    totalValue: metrics.total_value,
-                    totalCost: metrics.total_cost,
-                    totalProfit: metrics.total_profit,
-                    totalReturn: metrics.total_return.toFixed(2),
-                    fundCount: metrics.fund_count
+                    totalValue: metrics.total_value || 0,
+                    totalCost: metrics.total_cost || 0,
+                    totalProfit: metrics.total_profit || 0,
+                    totalReturn: (metrics.total_return || 0).toFixed(2),
+                    fundCount: metrics.fund_count || 0
                 },
-                holdings: data.holdings,
-                recommendations: data.recommendations,
-                marketAnalysis: data.market_analysis
+                holdings: data.holdings || [],
+                recommendations: data.recommendations || [],
+                marketAnalysis: data.market_analysis || '暂无市场分析'
             };
         }
 
