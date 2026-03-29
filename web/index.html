@@ -850,9 +850,9 @@
                     ? 'http://localhost:5001/api/analyze'
                     : '/api/analyze';
                 
-                // 创建超时控制器
+                // 创建超时控制器（120秒）
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 60000); // 60秒超时
+                const timeoutId = setTimeout(() => controller.abort(), 120000); // 120秒超时
                 
                 const response = await fetch(API_URL, {
                     method: 'POST',
