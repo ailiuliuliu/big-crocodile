@@ -1040,27 +1040,37 @@
             return recs;
         }
 
-        // 显示结果
+        // 显示结果（添加安全检查）
         function displayResults(analysis) {
-            const { overview, holdings, recommendations } = analysis;
+            if (!analysis || !analysis.overview) {
+                console.error('分析结果格式错误:', analysis);
+                document.getElementById('resultArea').innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: #f56565;">
+                        <p>❌ 分析结果格式错误，请刷新重试</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const { overview, holdings = [], recommendations = [] } = analysis;
             
             let html = `
                 <div class="overview">
                     <div class="overview-item">
                         <div class="label">持仓总值</div>
-                        <div class="value">¥${overview.totalValue.toFixed(2)}</div>
+                        <div class="value">¥${(overview.totalValue || 0).toFixed(2)}</div>
                     </div>
                     <div class="overview-item">
                         <div class="label">持仓成本</div>
-                        <div class="value">¥${overview.totalCost.toFixed(2)}</div>
+                        <div class="value">¥${(overview.totalCost || 0).toFixed(2)}</div>
                     </div>
-                    <div class="overview-item ${overview.totalReturn >= 0 ? 'positive' : 'negative'}">
+                    <div class="overview-item ${(overview.totalReturn || 0) >= 0 ? 'positive' : 'negative'}">
                         <div class="label">持有收益</div>
-                        <div class="value">${overview.totalReturn >= 0 ? '+' : ''}¥${overview.totalProfit.toFixed(2)}</div>
+                        <div class="value">${(overview.totalReturn || 0) >= 0 ? '+' : ''}¥${(overview.totalProfit || 0).toFixed(2)}</div>
                     </div>
-                    <div class="overview-item ${overview.totalReturn >= 0 ? 'positive' : 'negative'}">
+                    <div class="overview-item ${(overview.totalReturn || 0) >= 0 ? 'positive' : 'negative'}">
                         <div class="label">总收益率</div>
-                        <div class="value">${overview.totalReturn >= 0 ? '+' : ''}${overview.totalReturn}%</div>
+                        <div class="value">${(overview.totalReturn || 0) >= 0 ? '+' : ''}${overview.totalReturn || 0}%</div>
                     </div>
                 </div>
 
@@ -1069,17 +1079,18 @@
             `;
 
             recommendations.forEach(rec => {
+                const details = rec.details || {};
                 html += `
-                    <div class="rec-card ${rec.type}">
+                    <div class="rec-card ${rec.type || 'hold'}">
                         <div class="rec-header">
-                            <div class="rec-type">${rec.typeLabel}</div>
-                            <div class="rec-urgency ${rec.urgency}">紧急度: ${rec.urgencyLabel}</div>
+                            <div class="rec-type">${rec.typeLabel || rec.type || '持有'}</div>
+                            <div class="rec-urgency ${rec.urgency || 'low'}">紧急度: ${rec.urgencyLabel || rec.urgency || '低'}</div>
                         </div>
-                        <div class="rec-fund"><strong>${rec.fund}</strong></div>
-                        <div class="rec-reason"><strong>分析：</strong>${rec.reason}</div>
-                        <div class="rec-action"><strong>建议：</strong>${rec.action}</div>
+                        <div class="rec-fund"><strong>${rec.fund || rec.fund_name || '未知基金'}</strong></div>
+                        <div class="rec-reason"><strong>分析：</strong>${rec.reason || '暂无分析'}</div>
+                        <div class="rec-action"><strong>建议：</strong>${rec.action || '继续持有观察'}</div>
                         <div class="rec-details">
-                            ${Object.entries(rec.details).map(([key, val]) => `
+                            ${Object.entries(details).map(([key, val]) => `
                                 <div class="rec-detail-item">
                                     <div class="label">${key}</div>
                                     <div class="value">${val}</div>
