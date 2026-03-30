@@ -890,11 +890,35 @@
             }
         }
 
-        // 格式化AI分析结果（添加安全检查）
+        // 格式化AI分析结果（增强容错）
         function formatAIAnalysisResult(data) {
-            if (!data || !data.portfolio_metrics) {
-                console.error('AI返回数据格式错误:', data);
-                throw new Error('AI返回数据不完整');
+            console.log('收到AI返回数据:', data);
+            
+            // 完全降级处理
+            if (!data || typeof data !== 'object') {
+                console.error('AI返回数据格式错误（非对象）:', data);
+                throw new Error('AI返回数据格式错误');
+            }
+            
+            // 检查是否有portfolio_metrics
+            if (!data.portfolio_metrics) {
+                console.error('AI返回数据缺少portfolio_metrics:', data);
+                // 如果没有metrics但有holdings，尝试从holdings计算
+                if (data.holdings && Array.isArray(data.holdings)) {
+                    const totalValue = data.holdings.reduce((sum, h) => sum + (h.amount || 0), 0);
+                    const totalCost = data.holdings.reduce((sum, h) => sum + (h.cost || 0), 0);
+                    const totalProfit = totalValue - totalCost;
+                    
+                    data.portfolio_metrics = {
+                        total_value: totalValue,
+                        total_cost: totalCost,
+                        total_profit: totalProfit,
+                        total_return: totalCost > 0 ? (totalProfit / totalCost * 100) : 0,
+                        fund_count: data.holdings.length
+                    };
+                } else {
+                    throw new Error('AI返回数据不完整');
+                }
             }
             
             const metrics = data.portfolio_metrics;
