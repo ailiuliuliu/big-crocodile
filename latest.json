@@ -22,11 +22,11 @@
       "cost": 14000.0,
       "return_rate": -35.22,
       "real_time": {
-        "confirmed_nav": 1.8436,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 1.8281,
-        "estimated_change": -0.84,
-        "estimated_time": "2026-05-13 14:50"
+        "confirmed_nav": 1.8204,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 1.7789,
+        "estimated_change": -2.28,
+        "estimated_time": "2026-05-14 14:47"
       }
     },
     {
@@ -36,11 +36,11 @@
       "cost": 4800.0,
       "return_rate": -14.36,
       "real_time": {
-        "confirmed_nav": 3.7215,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 3.7262,
-        "estimated_change": 0.13,
-        "estimated_time": "2026-05-13 14:52"
+        "confirmed_nav": 3.7254,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 3.7146,
+        "estimated_change": -0.29,
+        "estimated_time": "2026-05-14 14:48"
       }
     },
     {
@@ -50,11 +50,11 @@
       "cost": 5399.75,
       "return_rate": -4.37,
       "real_time": {
-        "confirmed_nav": 5.2824,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 5.289,
-        "estimated_change": 0.13,
-        "estimated_time": "2026-05-13 14:48"
+        "confirmed_nav": 5.2828,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 5.264,
+        "estimated_change": -0.36,
+        "estimated_time": "2026-05-14 14:47"
       }
     },
     {
@@ -64,11 +64,11 @@
       "cost": 1500.0,
       "return_rate": -4.39,
       "real_time": {
-        "confirmed_nav": 2.1903,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 2.2075,
-        "estimated_change": 0.79,
-        "estimated_time": "2026-05-13 14:49"
+        "confirmed_nav": 2.2091,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 2.145,
+        "estimated_change": -2.9,
+        "estimated_time": "2026-05-14 14:46"
       }
     },
     {
@@ -78,11 +78,11 @@
       "cost": 2500.0,
       "return_rate": -4.29,
       "real_time": {
-        "confirmed_nav": 1.568,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 1.6053,
-        "estimated_change": 2.38,
-        "estimated_time": "2026-05-13 14:49"
+        "confirmed_nav": 1.6025,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 1.5777,
+        "estimated_change": -1.55,
+        "estimated_time": "2026-05-14 14:46"
       }
     },
     {
@@ -92,11 +92,11 @@
       "cost": 7000.0,
       "return_rate": -3.01,
       "real_time": {
-        "confirmed_nav": 2.1436,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 2.1445,
-        "estimated_change": 0.04,
-        "estimated_time": "2026-05-13 14:49"
+        "confirmed_nav": 2.1451,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 2.1449,
+        "estimated_change": -0.01,
+        "estimated_time": "2026-05-14 14:46"
       }
     },
     {
@@ -106,11 +106,11 @@
       "cost": 4819.98,
       "return_rate": 36.28,
       "real_time": {
-        "confirmed_nav": 6.876,
-        "confirmed_date": "2026-05-12",
-        "estimated_nav": 7.0573,
-        "estimated_change": 2.64,
-        "estimated_time": "2026-05-13 14:50"
+        "confirmed_nav": 7.079,
+        "confirmed_date": "2026-05-13",
+        "estimated_nav": 6.963,
+        "estimated_change": -1.64,
+        "estimated_time": "2026-05-14 14:47"
       }
     }
   ],
@@ -150,5 +150,5 @@
     }
   ],
   "market_analysis": "市场分析功能暂时不可用",
-  "analyzed_at": "2026-05-13 06:52:48"
+  "analyzed_at": "2026-05-14 06:50:15"
 }
