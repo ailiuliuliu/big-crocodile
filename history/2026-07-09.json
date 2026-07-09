@@ -20,49 +20,98 @@
       "code": "004851",
       "amount": 9069.4,
       "cost": 14000.0,
-      "return_rate": -35.22
+      "return_rate": -35.22,
+      "real_time": {
+        "confirmed_nav": 1.8216,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 1.8584,
+        "estimated_change": 2.02,
+        "estimated_time": "2026-07-09 15:00"
+      }
     },
     {
       "name": "国泰黄金ETF联接A",
       "code": "000218",
       "amount": 4110.88,
       "cost": 4800.0,
-      "return_rate": -14.36
+      "return_rate": -14.36,
+      "real_time": {
+        "confirmed_nav": 3.2556,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 3.2474,
+        "estimated_change": -0.25,
+        "estimated_time": "2026-07-09 15:30"
+      }
     },
     {
       "name": "大成高鑫股票A",
       "code": "000628",
       "amount": 5163.51,
       "cost": 5399.75,
-      "return_rate": -4.37
+      "return_rate": -4.37,
+      "real_time": {
+        "confirmed_nav": 4.8605,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 4.8705,
+        "estimated_change": 0.21,
+        "estimated_time": "2026-07-09 15:00"
+      }
     },
     {
       "name": "华夏有色金属ETF联接A",
       "code": "512400",
       "amount": 1434.18,
       "cost": 1500.0,
-      "return_rate": -4.39
+      "return_rate": -4.39,
+      "real_time": {
+        "confirmed_nav": 1.754,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 1.744,
+        "estimated_change": -0.57,
+        "estimated_time": "2026-07-09 15:00"
+      }
     },
     {
       "name": "南方中证机器人ETF联接C",
       "code": "020608",
       "amount": 2392.81,
       "cost": 2500.0,
-      "return_rate": -4.29
+      "return_rate": -4.29,
+      "real_time": {
+        "confirmed_nav": 1.5077,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 1.5422,
+        "estimated_change": 2.29,
+        "estimated_time": "2026-07-09 15:00"
+      }
     },
     {
       "name": "创金合信中证红利低波指数A",
       "code": "005561",
       "amount": 6789.5,
       "cost": 7000.0,
-      "return_rate": -3.01
+      "return_rate": -3.01,
+      "real_time": {
+        "confirmed_nav": 2.0378,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 2.014,
+        "estimated_change": -1.17,
+        "estimated_time": "2026-07-09 15:00"
+      }
     },
     {
       "name": "信澳新能源产业股票A",
       "code": "001410",
       "amount": 6568.53,
       "cost": 4819.98,
-      "return_rate": 36.28
+      "return_rate": 36.28,
+      "real_time": {
+        "confirmed_nav": 8.345,
+        "confirmed_date": "2026-07-08",
+        "estimated_nav": 8.8397,
+        "estimated_change": 5.93,
+        "estimated_time": "2026-07-09 15:00"
+      }
     }
   ],
   "recommendations": [
@@ -101,5 +150,5 @@
     }
   ],
   "market_analysis": "市场分析功能暂时不可用",
-  "analyzed_at": "2026-07-08 06:41:21"
+  "analyzed_at": "2026-07-09 07:44:19"
 }
