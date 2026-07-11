@@ -52,8 +52,8 @@
       "real_time": {
         "confirmed_nav": 4.8623,
         "confirmed_date": "2026-07-09",
-        "estimated_nav": 4.842,
-        "estimated_change": -0.42,
+        "estimated_nav": 4.8416,
+        "estimated_change": -0.43,
         "estimated_time": "2026-07-10 15:00"
       }
     },
@@ -150,5 +150,5 @@
     }
   ],
   "market_analysis": "市场分析功能暂时不可用",
-  "analyzed_at": "2026-07-10 07:42:40"
+  "analyzed_at": "2026-07-11 06:20:11"
 }
