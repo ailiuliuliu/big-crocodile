@@ -24,9 +24,9 @@
       "real_time": {
         "confirmed_nav": 1.9634,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 1.8523,
-        "estimated_change": -5.66,
-        "estimated_time": "2026-07-17 14:18"
+        "estimated_nav": 1.8207,
+        "estimated_change": -7.27,
+        "estimated_time": "2026-07-17 15:00"
       }
     },
     {
@@ -38,9 +38,9 @@
       "real_time": {
         "confirmed_nav": 3.1694,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 3.1545,
-        "estimated_change": -0.47,
-        "estimated_time": "2026-07-17 14:20"
+        "estimated_nav": 3.1519,
+        "estimated_change": -0.55,
+        "estimated_time": "2026-07-17 15:30"
       }
     },
     {
@@ -52,9 +52,9 @@
       "real_time": {
         "confirmed_nav": 4.9782,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 4.9511,
-        "estimated_change": -0.54,
-        "estimated_time": "2026-07-17 14:18"
+        "estimated_nav": 4.9215,
+        "estimated_change": -1.14,
+        "estimated_time": "2026-07-17 15:00"
       }
     },
     {
@@ -66,9 +66,9 @@
       "real_time": {
         "confirmed_nav": 1.7197,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 1.6597,
-        "estimated_change": -3.49,
-        "estimated_time": "2026-07-17 14:18"
+        "estimated_nav": 1.6366,
+        "estimated_change": -4.83,
+        "estimated_time": "2026-07-17 15:00"
       }
     },
     {
@@ -80,9 +80,9 @@
       "real_time": {
         "confirmed_nav": 1.4356,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 1.3769,
-        "estimated_change": -4.09,
-        "estimated_time": "2026-07-17 14:18"
+        "estimated_nav": 1.3508,
+        "estimated_change": -5.91,
+        "estimated_time": "2026-07-17 15:00"
       }
     },
     {
@@ -94,9 +94,9 @@
       "real_time": {
         "confirmed_nav": 2.0809,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 2.0953,
-        "estimated_change": 0.69,
-        "estimated_time": "2026-07-17 14:18"
+        "estimated_nav": 2.0861,
+        "estimated_change": 0.25,
+        "estimated_time": "2026-07-17 15:00"
       }
     },
     {
@@ -108,9 +108,9 @@
       "real_time": {
         "confirmed_nav": 7.179,
         "confirmed_date": "2026-07-16",
-        "estimated_nav": 6.8419,
-        "estimated_change": -4.69,
-        "estimated_time": "2026-07-17 14:18"
+        "estimated_nav": 6.6335,
+        "estimated_change": -7.6,
+        "estimated_time": "2026-07-17 15:00"
       }
     }
   ],
@@ -150,5 +150,5 @@
     }
   ],
   "market_analysis": "市场分析功能暂时不可用",
-  "analyzed_at": "2026-07-17 06:22:27"
+  "analyzed_at": "2026-07-18 06:10:18"
 }
